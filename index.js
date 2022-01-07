@@ -9,9 +9,7 @@ const activitiesRoute = require('./routes/activities');
 dotenv.config(); 
 mongoose.connect(
     process.env.DB_CONNECT, 
-    (a) => {
-        console.log('DB - ' + a);
-    }
+    (a) => console.log('DB - ' + a)
 );
 
 app.use(express.json());
