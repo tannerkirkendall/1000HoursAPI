@@ -14,7 +14,6 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hasedPassword = await bcrypt.hash(req.body.password, salt);
 
-    
     const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -24,7 +23,7 @@ router.post('/register', async (req, res) => {
 
     try{
          const savedUser = await user.save();
-         res.send(savedUser);
+         res.send();
     }catch(err){
         res.status(400).send(err);
     }
@@ -41,8 +40,7 @@ router.post('/login', async (req, res) => {
     if (!validPass) return res.status(400).send('Wrong Pass');
 
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
-
+    res.header('auth-token', token).send({token: token});
 });
 
 module.exports = router;

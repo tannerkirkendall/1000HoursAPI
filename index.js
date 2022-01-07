@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const app = express();
 
 const authRoute = require('./routes/auth');
-const postRoute = require('./routes/posts');
+const activitiesRoute = require('./routes/activities');
 
 dotenv.config(); 
 mongoose.connect(
@@ -16,8 +16,8 @@ mongoose.connect(
 );
 
 app.use(express.json());
-app.use('/api/user', authRoute);
-app.use('/api/posts', postRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/activities', activitiesRoute);
 
 const port = process.env.PORT
 

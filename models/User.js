@@ -1,5 +1,14 @@
 const mongoose = require('mongoose');
 
+const activitySchema = new mongoose.Schema({
+    startTime: {
+        type: Date
+    },
+    endTime: {
+        type: Date
+    }
+});
+
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -21,6 +30,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 8,
         max: 1024
+    },
+    activties: {
+        type: [activitySchema]
     },
     date: {
         type:Date,
