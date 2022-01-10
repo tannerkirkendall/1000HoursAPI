@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
     if (!validPass) return res.status(400).send('Wrong Pass');
 
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send({token: token});
+    res.header('x-access-token', token).send({accessToken: token, firstName: user.firstName});
 });
 
 module.exports = router;

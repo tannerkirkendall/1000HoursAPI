@@ -6,6 +6,9 @@ const activitySchema = new mongoose.Schema({
     },
     endTime: {
         type: Date
+    },
+    minutes: {
+        type: Number
     }
 });
 
