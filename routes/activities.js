@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const verify = require('./verifyToken');
 const User = require('../models/User'); 
+const calc = require('../calculations');
 
 router.post('/', verify, async (req, res) => {
 
@@ -32,10 +33,11 @@ router.patch('/:activityId', verify, async (req, res) => {
 
 router.get('/', verify, async (req, res) => {
     try{
-        const activties = await User.findById(req.user._id, {activties: 1});
-        res.send(activties);
+        const activities = await User.findById(req.user._id, {activities: 1});
+        const enrich = calc.enrichGetActivities(activities);
+        res.send(enrich);
     }catch (err) {
-        res.status(400).send();
+        res.status(400).send(err);
     }
 });
 

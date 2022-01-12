@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
         min: 8,
         max: 1024
     },
-    activties: {
+    activities: {
         type: [activitySchema]
     },
     date: {
