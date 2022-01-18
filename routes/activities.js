@@ -12,7 +12,7 @@ router.post('/', verify, async (req, res) => {
                 new: true
             }
         );
-        res.send(asdf.activities);
+        res.send(asdf.activities.pop());
     }catch (err){
         res.status(400).send(err);
     }
@@ -37,6 +37,16 @@ router.get('/', verify, async (req, res) => {
     try{
         const activities = await User.findById(req.user._id, {activities: 1}).sort({startTime: 1});
         const enrich = calc.enrichGetActivities(activities);
+        res.send(enrich);
+    }catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+router.get('/:activityId', verify, async (req, res) => {
+    try{
+        const activities = await User.findById(req.user._id, {activities: {$elemMatch: {_id: req.params.activityId}}});
+        const enrich = calc.enrich(activities.activities[0]);
         res.send(enrich);
     }catch (err) {
         res.status(400).send(err);
