@@ -33,7 +33,7 @@ router.patch('/:activityId', verify, async (req, res) => {
 
 router.get('/', verify, async (req, res) => {
     try{
-        const activities = await User.findById(req.user._id, {activities: 1});
+        const activities = await User.findById(req.user._id, {activities: 1}).sort({startTime: 1});
         const enrich = calc.enrichGetActivities(activities);
         res.send(enrich);
     }catch (err) {
