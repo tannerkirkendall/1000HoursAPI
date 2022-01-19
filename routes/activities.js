@@ -16,7 +16,6 @@ router.post('/', verify, async (req, res) => {
     }catch (err){
         res.status(400).send(err);
     }
-
 });
 
 router.patch('/:activityId', verify, async (req, res) => {
@@ -30,7 +29,19 @@ router.patch('/:activityId', verify, async (req, res) => {
     }catch (err){
         res.status(400).send(err);
     }
+});
 
+router.delete('/:activityId', verify, async (req, res) => {
+    
+    try{
+        var asdf = await User.updateOne(
+            {_id: req.user._id, "activities._id": req.params.activityId},
+            { $pull: { activities: {_id: req.params.activityId} } }
+        );
+        res.send(asdf);
+    }catch (err){
+        res.status(400).send(err);
+    }
 });
 
 router.get('/', verify, async (req, res) => {
@@ -52,5 +63,7 @@ router.get('/:activityId', verify, async (req, res) => {
         res.status(400).send(err);
     }
 });
+
+
 
 module.exports = router;
