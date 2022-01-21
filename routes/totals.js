@@ -4,8 +4,6 @@ const User = require('../models/User');
 const calc = require('../calculations');
 const { isToday } = require('date-fns');
 
-const minuteReducer = (previousValue, currentValue) => previousValue + currentValue;
-
 router.get('/', verify, async (req, res) => {
     try{
         const activities = await User.findById(req.user._id, {activities: 1}).sort({startTime: 1});
@@ -13,8 +11,8 @@ router.get('/', verify, async (req, res) => {
         var total = 0;
         var totalToday = 0;
         enrich.forEach(e => {
-            total += e.totalElapsedMinutes
-            if (isToday(e.startTime)) totalToday += e.totalElapsedMinutes
+            total += e.totalElapsedMinutes > 0 ? e.totalElapsedMinutes : 0;
+            if (isToday(e.startTime)) totalToday += e.totalElapsedMinutes > 0 ? e.totalElapsedMinutes : 0;
         });
 
         const data = {
