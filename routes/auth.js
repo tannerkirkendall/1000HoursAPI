@@ -43,4 +43,6 @@ router.post('/login', async (req, res) => {
     res.header('x-access-token', token).send({accessToken: token, firstName: user.firstName});
 });
 
+router.get('/keepAlive', async (req, res) => res.send())
+
 module.exports = router;
